@@ -1,3 +1,18 @@
+type BaseStats {
+  HP: Int
+  Attack: Int
+  Defense: Int
+  Speed: Int
+}
+
+type Pokemon {
+  id: ID!
+  name: String!
+  type: [String]!
+  base: BaseStats!
+}
+
 type Query {
-  hello(subject: String): String
+  allPokemonTypes(lang: String): [String]
+  pokemonByType(type: String): [Pokemon]
 }

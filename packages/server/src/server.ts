@@ -9,6 +9,7 @@ import { execute, subscribe } from 'graphql';
 import { createServer, Server } from 'http';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import * as url from 'url';
+import PokemonAPI from './data-source/pokemon';
 
 type ExpressGraphQLOptionsFunction = (req?: express.Request, res?: express.Response) => any | Promise<any>;
 
@@ -37,6 +38,9 @@ export default async (port: number): Promise<Server> => {
 
   const apolloServer = new ApolloServer({
     playground: false,
+    dataSources: () => ({
+      pokemonAPI: new PokemonAPI()
+    }),
     schema
   });
 
