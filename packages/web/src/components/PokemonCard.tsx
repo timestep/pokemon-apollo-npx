@@ -25,11 +25,20 @@ export const PokemonCard = ({ pokemon }: Props) => {
       <WindowContent>
         <Flex>
           <Fieldset label="ID">{pokemon.id}</Fieldset>
+          <Fieldset label="Type">{pokemon.type.join(' ')}</Fieldset>
           <Fieldset label="HP">{pokemon.base.HP}</Fieldset>
         </Flex>
-        <br/>
+        <br />
         <Fieldset label="Image">
           <img src={BASE_IMAGE_URL(pokemon.id)} />
+        </Fieldset>
+        <br />
+        <Fieldset label="Base Stats">
+          <Flex>
+            <Fieldset label="Atk">{pokemon.base.Attack}</Fieldset>
+            <Fieldset label="Def">{pokemon.base.Defense}</Fieldset>
+            <Fieldset label="Spd">{pokemon.base.Speed}</Fieldset>
+          </Flex>
         </Fieldset>
       </WindowContent>
     </Window>

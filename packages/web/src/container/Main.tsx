@@ -10,7 +10,7 @@ export const Main = () => {
   const [iChooseYou, setChosenPokemon] = useState('');
   return (
     <Flex>
-      <FlexCol>
+      <FlexCol style={{ width: '20%' }}>
         <Primary />
         <ChoosePokemonType onChange={(pokemonType: string) => setType(pokemonType)} />
       </FlexCol>

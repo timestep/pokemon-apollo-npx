@@ -19,6 +19,13 @@ const POKEMON_SEARCH_BY_TYPE = gql`
   }
 `;
 
+const BASE_SPRITE_URL = (id: string) => {
+  while (id.length < 3) {
+    id = '0' + id;
+  }
+  return `https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/sprites/${id}MS.png?`;
+};
+
 interface Props {
   type: string;
   onSelect(pokemon: any): void;
@@ -42,7 +49,8 @@ export const PokemonSearchByType = ({ type, onSelect }: Props) => {
     <Table>
       <TableHead>
         <TableRow head>
-          <TableHeadCell disabled>ID</TableHeadCell>
+          <TableHeadCell disabled>-</TableHeadCell>
+          <TableHeadCell>ID</TableHeadCell>
           <TableHeadCell>Types</TableHeadCell>
           <TableHeadCell>Name</TableHeadCell>
           <TableHeadCell>HP</TableHeadCell>
@@ -54,12 +62,11 @@ export const PokemonSearchByType = ({ type, onSelect }: Props) => {
       <TableBody>
         {pokemon.map(chosenOne => (
           <TableRow key={chosenOne.name + '-name'} onClick={() => onSelect(chosenOne)}>
-            <TableDataCell>{chosenOne.id}</TableDataCell>
-            <TableDataCell style={{ textAlign: 'center' }}>
-              <span role="img" aria-label="LEAF">
-                🌿
-              </span>
+            <TableDataCell>
+              <img src={BASE_SPRITE_URL(chosenOne.id)} />{' '}
             </TableDataCell>
+            <TableDataCell>{chosenOne.id}</TableDataCell>
+            <TableDataCell style={{ textAlign: 'center' }}>{chosenOne.type.join(' ')}</TableDataCell>
             <TableDataCell>{chosenOne.name}</TableDataCell>
             <TableDataCell>{chosenOne.base.HP}</TableDataCell>
             <TableDataCell>{chosenOne.base.Attack}</TableDataCell>
