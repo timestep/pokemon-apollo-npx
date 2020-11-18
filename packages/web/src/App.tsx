@@ -1,59 +1,43 @@
-import { gql } from 'apollo-boost';
 import * as React from 'react';
-import { Query } from 'react-apollo';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { PokemonTypes } from './queries/PokemonTypes';
 
-const LOCAL_HELLO = gql`
-  query localHello($subject: String) {
-    localHello(subject: $subject) @client
+import { styleReset } from 'react95';
+// original Windows95 font (optionally)
+// tslint:disable-next-line:no-submodule-imports
+// import ms_sans_serif from 'react95/dist/fonts/ms_sans_serif.woff2';
+// tslint:disable-next-line:no-submodule-imports
+// import ms_sans_serif_bold from 'react95/dist/fonts/ms_sans_serif_bold.woff2';
+// pick a theme of your choice
+// tslint:disable-next-line:no-submodule-imports
+import original from 'react95/dist/themes/original';
+import { Main } from './container/Main';
+
+const GlobalStyles = createGlobalStyle`
+  @font-face {
+    font-family: 'ms_sans_serif';
+    font-weight: 400;
+    font-style: normal
   }
-`;
-
-const SERVER_HELLO = gql`
-  query serverHello($subject: String) {
-    hello(subject: $subject)
+  @font-face {
+    font-family: 'ms_sans_serif';
+    font-weight: bold;
+    font-style: normal
   }
+  body {
+    font-family: 'ms_sans_serif';
+    background-color: teal;
+  }
+  ${styleReset}
 `;
-
-const LocalHello = () => (
-  <Query query={LOCAL_HELLO} variables={{ subject: 'World' }}>
-    {({ loading, error, data }) => {
-      if (loading) {
-        return 'Loading...';
-      }
-
-      return <h2>Local Salutation: {error ? error.message : data.localHello}</h2>;
-    }}
-  </Query>
-);
-
-const ServerHello = () => (
-  <Query query={SERVER_HELLO} variables={{ subject: 'World' }}>
-    {({ loading, error, data }) => {
-      if (loading) {
-        return 'Loading...';
-      }
-
-      return (
-        <h2>
-          Server Salutation:&nbsp;
-          {error
-            ? error.message + '. You probably don`t have GraphQL Server running at the moment - thats okay'
-            : data.hello}
-        </h2>
-      );
-    }}
-  </Query>
-);
 
 const App = () => (
-  <div>
-    <h1>
-      Welcome to your own <a href="http://localhost:8080/graphiql">GraphQL</a> web front end!
-    </h1>
-    <h2>You can start editing source code and see results immediately</h2>
-    <LocalHello />
-    <ServerHello />
-  </div>
+  <>
+    <GlobalStyles />
+    <ThemeProvider theme={original}>
+      <Main />
+    </ThemeProvider>
+  </>
 );
 
 export default App;
